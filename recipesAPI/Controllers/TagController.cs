@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using recipesCommon.Interfaces;
 using recipesCommon.Model.Request;
 using recipesCommon.Model.Response;
@@ -11,15 +12,22 @@ namespace recipesAPI.Controllers
     public class TagController : ControllerBase
     {
         private readonly IEntityService<Tag> _tagService;
+        private readonly IValidator<CreateTagRequest> _validator;
 
-        public TagController(IEntityService<Tag> tagService)
+        public TagController(IEntityService<Tag> tagService, IValidator<CreateTagRequest> validator)
         {
             _tagService = tagService;
+            _validator = validator;
         }
 
         [HttpPost]
         public async Task<ActionResult<TagResponse>> AddTag(CreateTagRequest request)
         {
+            var validationResult = await _validator.ValidateAsync(request);
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
             var tag = new Tag
             {
                 Name = request.Name,

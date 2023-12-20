@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using recipesCommon.Interfaces;
 using recipesCommon.Model.Request;
 using recipesCommon.Model.Response;
@@ -11,15 +12,22 @@ namespace recipesAPI.Controllers
     public class PhotoController : ControllerBase
     {
         private readonly IEntityService<Photo> _photoService;
+        private readonly IValidator<CreatePhotoRequest> _validator;
 
-        public PhotoController(IEntityService<Photo> photoService)
+        public PhotoController(IEntityService<Photo> photoService, IValidator<CreatePhotoRequest> validator)
         {
             _photoService = photoService;
+            _validator = validator;
         }
 
         [HttpPost]
         public async Task<ActionResult<PhotoResponse>> AddPhoto(CreatePhotoRequest request)
         {
+            var validationResult = await _validator.ValidateAsync(request);
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
             var photo = new Photo
             {
                 Address = request.Address,
