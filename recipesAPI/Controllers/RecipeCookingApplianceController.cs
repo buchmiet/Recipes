@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using recipesCommon.Interfaces;
 using recipesCommon.Model.Request;
 using recipesCommon.Model.Response;
@@ -11,15 +12,22 @@ namespace recipesAPI.Controllers
     public class RecipeCookingApplianceController : ControllerBase
     {
         private readonly IEntityService<RecipeCookingAppliance> _recipeCookingApplianceService;
+        private readonly IValidator<CreateRecipeCookingApplianceRequest> _validator;
 
-        public RecipeCookingApplianceController(IEntityService<RecipeCookingAppliance> recipeCookingApplianceService)
+        public RecipeCookingApplianceController(IEntityService<RecipeCookingAppliance> recipeCookingApplianceService, IValidator<CreateRecipeCookingApplianceRequest> validator)
         {
             _recipeCookingApplianceService = recipeCookingApplianceService;
+            _validator = validator;
         }
 
         [HttpPost]
         public async Task<ActionResult<RecipeCookingApplianceResponse>> AddRecipeCookingAppliance(CreateRecipeCookingApplianceRequest request)
         {
+            var validationResult = await _validator.ValidateAsync(request);
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
             var recipeCookingAppliance = new RecipeCookingAppliance
             {
                 RecipeId = request.RecipeId,

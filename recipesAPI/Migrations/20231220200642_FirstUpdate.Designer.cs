@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using recipesCommon.DataAccess;
 
@@ -10,9 +11,11 @@ using recipesCommon.DataAccess;
 namespace recipesAPI.Migrations
 {
     [DbContext(typeof(RecipesDbContext))]
-    partial class RecipesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231220200642_FirstUpdate")]
+    partial class FirstUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,9 +100,6 @@ namespace recipesAPI.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("IngredientAmountTypeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("IngredientName")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -112,8 +112,6 @@ namespace recipesAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("IngredientId");
-
-                    b.HasIndex("IngredientAmountTypeId");
 
                     b.HasIndex("Type");
 
@@ -392,19 +390,11 @@ namespace recipesAPI.Migrations
 
             modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+Ingredient", b =>
                 {
-                    b.HasOne("recipesCommon.DataAccess.RecipesDbContext+IngredientAmountType", "IngredientAmountTypeNavigation")
-                        .WithMany("Ingredients")
-                        .HasForeignKey("IngredientAmountTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("recipesCommon.DataAccess.RecipesDbContext+IngredientType", "IngredientTypeNavigation")
                         .WithMany("Ingredients")
                         .HasForeignKey("Type")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("IngredientAmountTypeNavigation");
 
                     b.Navigation("IngredientTypeNavigation");
                 });
@@ -532,11 +522,6 @@ namespace recipesAPI.Migrations
             modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+Ingredient", b =>
                 {
                     b.Navigation("RecipeIngredients");
-                });
-
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+IngredientAmountType", b =>
-                {
-                    b.Navigation("Ingredients");
                 });
 
             modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+IngredientType", b =>

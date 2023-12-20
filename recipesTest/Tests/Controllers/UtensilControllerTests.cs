@@ -8,6 +8,7 @@ using recipesCommon.Model.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using static recipesCommon.DataAccess.RecipesDbContext;
@@ -25,7 +26,7 @@ namespace recipesTest.Tests.Controllers
         public void Setup()
         {
             _mockUtensilService = new Mock<IEntityService<Utensil>>();
-            _validator = new CreateUtensilRequestValidator();
+            _validator = new CreateUtensilRequestValidator(_mockUtensilService.Object);
 
             _controller = new UtensilController(_mockUtensilService.Object, _validator);
         }
@@ -94,6 +95,29 @@ namespace recipesTest.Tests.Controllers
             // Assert
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
         }
+
+        [Test]
+        public async Task AddUtensil_WithExistingName_ReturnsBadRequest()
+        {
+            // Arrange
+            var existingName = "Spoon";
+            var request = new CreateUtensilRequest { Name = existingName };
+            var existingUtensil = new Utensil { UtensilId = 1, Name = existingName };
+
+            _mockUtensilService.Setup(s => s.GetOneAsync(It.IsAny<Expression<Func<Utensil, bool>>>(), It.IsAny<Expression<Func<Utensil, object>>>()))
+                .Returns((Expression<Func<Utensil, bool>> predicate, Expression<Func<Utensil, object>> orderByDescending) =>
+                {
+                    var compiledPredicate = predicate.Compile();
+                    return Task.FromResult(compiledPredicate(existingUtensil) ? existingUtensil : null);
+                });
+
+            // Act
+            var result = await _controller.AddUtensil(request);
+
+            // Assert
+            Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+        }
+
 
     }
 

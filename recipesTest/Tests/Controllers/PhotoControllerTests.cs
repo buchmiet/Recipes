@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using recipesCommon.Interfaces;
 using static recipesCommon.DataAccess.RecipesDbContext;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.Linq.Expressions;
 
 namespace recipesTest.Tests.Controllers
 {
@@ -27,8 +28,9 @@ namespace recipesTest.Tests.Controllers
         [SetUp]
         public void Setup()
         {
-            _validator = new CreatePhotoRequestValidator();
-            _photoService = new Mock<IEntityService<Photo>>(); 
+            _photoService = new Mock<IEntityService<Photo>>();
+            _validator = new CreatePhotoRequestValidator(_photoService.Object);
+       
 
             _controller = new PhotoController(_photoService.Object, _validator );
         }
@@ -96,6 +98,30 @@ namespace recipesTest.Tests.Controllers
             // Assert
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
         }
+
+        [Test]
+        public async Task AddPhoto_WithExistingAddress_ReturnsBadRequest()
+        {
+            // Arrange
+            var existingAddress = "www.internet.com/photo.jpg";
+            var request = new CreatePhotoRequest { Address = existingAddress };
+            var existingPhoto = new Photo { PhotoId = 1, Address = existingAddress };
+
+            _photoService.Setup(s => s.GetOneAsync(It.IsAny<Expression<Func<Photo, bool>>>(), It.IsAny<Expression<Func<Photo, object>>>()))
+                .Returns((Expression<Func<Photo, bool>> predicate, Expression<Func<Photo, object>> orderByDescending) =>
+                {
+                    var compiledPredicate = predicate.Compile();
+                    return Task.FromResult(compiledPredicate(existingPhoto) ? existingPhoto : null);
+                });
+
+            // Act
+            var result = await _controller.AddPhoto(request);
+
+            // Assert
+            Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+        }
+
+
     }
 
 }

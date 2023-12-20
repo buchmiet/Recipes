@@ -15,11 +15,7 @@ namespace recipesCommon.DataAccess
             {
                 entity.HasKey(e => e.RecipeId); // Klucz główny
 
-                entity.HasMany(d => d.RecipeIngredientAmounts)
-                    .WithOne(p => p.Recipe)
-                    .HasForeignKey(p => p.RecipeId)
-                    .OnDelete(DeleteBehavior.Cascade);
-
+               
                 entity.Property(e => e.Title)
                     .IsRequired()
                     .HasMaxLength(255); // Ograniczenie długości tytułu
@@ -32,37 +28,33 @@ namespace recipesCommon.DataAccess
 
 
 
-                entity.HasMany(d => d.RecipeCookingAppliances)
-                    .WithOne(p => p.Recipe)
-                    .HasForeignKey(p => p.RecipeId)
-                    .OnDelete(DeleteBehavior.Cascade); // Strategia usuwania
+                //entity.HasMany(d => d.RecipeCookingAppliances)
+                //    .WithOne(p => p.Recipe)
+                //    .HasForeignKey(p => p.RecipeId)
+                //    .OnDelete(DeleteBehavior.Cascade); // Strategia usuwania
 
 
-                entity.HasMany(d => d.RecipeUtensils)
-                    .WithOne(p => p.RecipeNavigation)
-                    .HasForeignKey(p => p.RecipeId)
-                    .OnDelete(DeleteBehavior.Cascade); // Strategia usuwania
+                //entity.HasMany(d => d.RecipeUtensils)
+                //    .WithOne(p => p.RecipeNavigation)
+                //    .HasForeignKey(p => p.RecipeId)
+                //    .OnDelete(DeleteBehavior.Cascade); // Strategia usuwania
 
 
-                entity.HasMany(d => d.CookingActions)
-                    .WithOne(p => p.Recipe)
-                    .HasForeignKey(p => p.RecipeId)
-                    .OnDelete(DeleteBehavior.Cascade); // Strategia usuwania
+                //entity.HasMany(d => d.CookingActions)
+                //    .WithOne(p => p.Recipe)
+                //    .HasForeignKey(p => p.RecipeId)
+                //    .OnDelete(DeleteBehavior.Cascade); // Strategia usuwania
+          
 
-                entity.HasMany(d => d.RecipeIngredientAmounts)
-                    .WithOne(p => p.Recipe)
-                    .HasForeignKey(p => p.RecipeId)
-                    .OnDelete(DeleteBehavior.Cascade); // Strategia usuwania
+                //entity.HasMany(d => d.PhotoRecipes)
+                //    .WithOne(p => p.Recipe)
+                //    .HasForeignKey(p => p.RecipeId)
+                //    .OnDelete(DeleteBehavior.Cascade);
 
-                entity.HasMany(d => d.PhotoRecipes)
-                    .WithOne(p => p.Recipe)
-                    .HasForeignKey(p => p.RecipeId)
-                    .OnDelete(DeleteBehavior.Cascade);
-
-                entity.HasMany(d => d.RecipeTagRelations)
-                    .WithOne(p => p.RecipeNavigation)
-                    .HasForeignKey(p => p.RecipeId)
-                    .OnDelete(DeleteBehavior.Cascade);
+                //entity.HasMany(d => d.RecipeTagRelations)
+                //    .WithOne(p => p.RecipeNavigation)
+                //    .HasForeignKey(p => p.RecipeId)
+                //    .OnDelete(DeleteBehavior.Cascade);
             });
 
 
@@ -132,6 +124,29 @@ namespace recipesCommon.DataAccess
                     .WithMany(p => p.Ingredients)
                     .HasForeignKey(p => p.Type)
                     .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(d => d.IngredientAmountTypeNavigation)
+                   .WithMany(p => p.Ingredients)
+                   .HasForeignKey(p => p.IngredientAmountTypeId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            });
+
+            modelBuilder.Entity<RecipeIngredient>(entity =>
+            {
+                entity.HasKey(e => e.RecipeIngredientId);
+                entity.Property(e => e.IngredientAmount).IsRequired();
+
+                entity.HasOne(d => d.IngredientNavigation)
+                    .WithMany(p => p.RecipeIngredients)
+                    .HasForeignKey(p => p.IngredientId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(d => d.RecipeNavigation)
+                 .WithMany(p => p.RecipeIngridientRelations)
+                 .HasForeignKey(p => p.RecipeId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
             });
 
 
@@ -195,30 +210,7 @@ namespace recipesCommon.DataAccess
                     .HasForeignKey(d => d.UtensilId)
                     .OnDelete(DeleteBehavior.Cascade); // Strategia usuwania
             });
-
-
-
-            modelBuilder.Entity<IngredientAmount>(entity =>
-            {
-                entity.HasKey(e => e.IngredientAmountId);
-
-                // Relacja do IngredientAmountType
-                entity.HasOne(d => d.IngredientAmountType)
-                    .WithMany()
-                    .HasForeignKey(d => d.IngredientAmountTypeId)
-                    .OnDelete(DeleteBehavior.Cascade); // Strategia usuwania
-
-                // Relacja do Ingredient
-                entity.HasOne(d => d.Ingredient)
-                    .WithMany()
-                    .HasForeignKey(d => d.IngredientId)
-                    .OnDelete(DeleteBehavior.Cascade); // Strategia usuwania
-            });
-
-
-
-
-
+       
         }
 
 
@@ -230,26 +222,27 @@ namespace recipesCommon.DataAccess
         public DbSet<CookingAction> CookingActions { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
-        public DbSet<IngredientType> IngredientTypes { get; set; }
-        public DbSet<IngredientAmount> IngredientAmounts { get; set; }
+        public DbSet<IngredientType> IngredientTypes { get; set; }    
         public DbSet<Utensil> Utensils { get; set; }
         public DbSet<RecipeUtensil> RecipeUtensils { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<RecipeTagRelation> RecipeTagRelations { get; set; }
-        public DbSet<RecipeIngredientAmount> RecipeIngredientAmounts { get; set; }
+        public DbSet<RecipeIngredient> RecipeIngredientAmounts { get; set; }
         public DbSet<IngredientAmountType> IngredientAmountTypes { get; set; }
 
-        public class RecipeIngredientAmount
+        public class RecipeIngredient
         {
-            public int RecipeIngredientAmountId { get; set; }
+            public int RecipeIngredientId { get; set; }
             public int RecipeId { get; set; } // Klucz obcy do Recipe
-            public int IngredientAmountId { get; set; } // Klucz obcy do IngredientAmount
+            public int IngredientId { get; set; } // Klucz obcy do Ingredient
             public DateTime CreatedOn { get; set; }
             public DateTime LastModifiedOn { get; set; }
+            public float IngredientAmount  { get; set; }
 
-            // Relacje do Recipe i IngredientAmount
-            public virtual Recipe Recipe { get; set; }
-            public virtual IngredientAmount IngredientAmount { get; set; }
+            // Relacje do Recipe i Ingredient
+            public virtual Recipe RecipeNavigation { get; set; }
+            public virtual Ingredient IngredientNavigation { get; set; }
+
         }
 
 
@@ -268,12 +261,14 @@ namespace recipesCommon.DataAccess
 
             // Relacje
             public virtual Author Author { get; set; }
-            public virtual ICollection<RecipeIngredientAmount> RecipeIngredientAmounts { get; set; }
+            public virtual ICollection<RecipeIngredient> RecipeIngredientAmounts { get; set; }
             public virtual ICollection<RecipeUtensil> RecipeUtensils { get; set; }
             public virtual ICollection<RecipeCookingAppliance> RecipeCookingAppliances { get; set; }
             public virtual ICollection<CookingAction> CookingActions { get; set; }
             public virtual ICollection<PhotoRecipe> PhotoRecipes { get; set; }
             public virtual ICollection<RecipeTagRelation> RecipeTagRelations { get; set; }
+
+            public virtual ICollection<RecipeIngredient> RecipeIngridientRelations { get; set; }
 
         }
 
@@ -408,25 +403,18 @@ namespace recipesCommon.DataAccess
             public int Type { get; set; }
             public DateTime CreatedOn { get; set; }
             public DateTime LastModifiedOn { get; set; }
-            public virtual IngredientType IngredientTypeNavigation { get; set; }
-        }
-
-        public class IngredientAmount
-        {
-            public int IngredientAmountId { get; set; }
             public int IngredientAmountTypeId { get; set; }
-            public int IngredientId { get; set; }
-            public float Amount { get; set; }
-
-            public DateTime CreatedOn { get; set; }
-            public DateTime LastModifiedOn { get; set; }
-            public virtual IngredientAmountType IngredientAmountType { get; set; }
-            public virtual Ingredient Ingredient { get; set; }
+            public virtual IngredientType IngredientTypeNavigation { get; set; }
+            public virtual IngredientAmountType IngredientAmountTypeNavigation { get; set; }
+            public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; }
         }
+
+
         public class IngredientAmountType
         {
             public int IngredientAmountTypeId { get; set; }
             public string UnitName { get; set; } // Nazwa jednostki miary, np. "gram", "ml"
+            public virtual ICollection<Ingredient> Ingredients { get; set; }
         }
 
     }

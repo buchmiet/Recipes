@@ -8,7 +8,7 @@ namespace recipesCommon.Model.Request
     {
         public int RecipeId { get; set; } // ID for existing Recipe
         public string Name { get; set; }
-        public int Position { get; set; }
+ 
     }
 
     public class CreateCookingActionRequestValidator : AbstractValidator<CreateCookingActionRequest>
@@ -26,8 +26,7 @@ namespace recipesCommon.Model.Request
                 .NotEmpty().WithMessage("Name is required")
                 .MaximumLength(500).WithMessage("Name must not exceed 500 characters");
 
-            RuleFor(request => request.Position)
-                .GreaterThan(0).WithMessage("Position must be positive");
+          
         }
 
         private async Task<bool> BeValidRecipeId(int recipeId, CancellationToken cancellationToken)

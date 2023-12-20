@@ -6,6 +6,7 @@ using recipesAPI.Controllers;
 using recipesCommon.Interfaces;
 using recipesCommon.Model.Request;
 using recipesCommon.Model.Response;
+using System.Linq.Expressions;
 using static recipesCommon.DataAccess.RecipesDbContext;
 
 
@@ -18,14 +19,15 @@ namespace recipesAPI.Tests.Controllers
         private AuthorController _controller;
         private Mock<IEntityService<Author>> _mockAuthorService;
         private IValidator<CreateAuthorRequest> _validator;
+      
 
         [SetUp]
-        public void Setup()
+        public  void Setup()
         {
         
             _mockAuthorService = new Mock<IEntityService<Author>>();
-            _validator = new CreateAuthorRequestValidator();
-
+            _mockAuthorService = new Mock<IEntityService<Author>>();
+            _validator = new CreateAuthorRequestValidator(_mockAuthorService.Object);
             _controller = new AuthorController(_mockAuthorService.Object, _validator);
         }
 
@@ -94,17 +96,27 @@ namespace recipesAPI.Tests.Controllers
 
 
         [Test]
-        public async Task GetAuthor_ExistingAuthor_ReturnsAuthor()
+        public async Task AddAuthor_WithExistingName_ReturnsBadRequest()
         {
-            // Testy dla akcji GetAuthor z kontrolera
-            // Przygotowanie danych testowych
-            // Wywołanie akcji
-            // Aserty na wynik akcji
+            // Arrange
+            var _ExistingAuthorName = "ExistingAuthor";
+            var request = new CreateAuthorRequest { AuthorName = _ExistingAuthorName };
+            var existingAuthor = new Author { AuthorId = 1, AuthorName = _ExistingAuthorName };
+
+            _mockAuthorService.Setup(s => s.GetOneAsync(It.IsAny<Expression<Func<Author, bool>>>(), It.IsAny<Expression<Func<Author, object>>>()))
+                   .Returns((Expression<Func<Author, bool>> predicate, Expression<Func<Author, object>> orderByDescending) =>
+                   {
+                       var compiledPredicate = predicate.Compile();
+                       return Task.FromResult(compiledPredicate(existingAuthor) ? existingAuthor : null);
+                   });
+          
+            // Act
+            var result = await _controller.AddAuthor(request);
+
+            // Assert
+            Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
         }
 
-        // Kontynuuj dla innych akcji CRUD
-
-        // ...
     }
 
 }

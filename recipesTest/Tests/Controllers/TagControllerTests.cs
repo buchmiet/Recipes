@@ -6,6 +6,7 @@ using recipesAPI.Controllers;
 using recipesCommon.Interfaces;
 using recipesCommon.Model.Request;
 using recipesCommon.Model.Response;
+using System.Linq.Expressions;
 using static recipesCommon.DataAccess.RecipesDbContext;
 
 namespace recipesTest.Tests.Controllers
@@ -21,7 +22,7 @@ namespace recipesTest.Tests.Controllers
         public void Setup()
         {
             _mockTagService = new Mock<IEntityService<Tag>>();
-            _validator = new CreateTagRequestValidator();
+            _validator = new CreateTagRequestValidator(_mockTagService.Object);
 
             _controller = new TagController(_mockTagService.Object, _validator);
         }
@@ -90,6 +91,29 @@ namespace recipesTest.Tests.Controllers
             // Assert
             Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
         }
+
+        [Test]  
+        public async Task AddTag_WithExistingName_ReturnsBadRequest()
+        {
+            // Arrange
+            var existingName = "Winter Food";
+            var request = new CreateTagRequest { Name = existingName };
+            var existingTag = new Tag { TagId = 1, Name = existingName };
+
+            _mockTagService.Setup(s => s.GetOneAsync(It.IsAny<Expression<Func<Tag, bool>>>(), It.IsAny<Expression<Func<Tag, object>>>()))
+                .Returns((Expression<Func<Tag, bool>> predicate, Expression<Func<Tag, object>> orderByDescending) =>
+                {
+                    var compiledPredicate = predicate.Compile();
+                    return Task.FromResult(compiledPredicate(existingTag) ? existingTag : null);
+                });
+
+            // Act
+            var result = await _controller.AddTag(request);
+
+            // Assert
+            Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+        }
+
     }
 
 }

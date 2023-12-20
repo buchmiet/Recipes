@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using recipesCommon.Interfaces;
 using recipesCommon.Model.Request;
 using recipesCommon.Model.Response;
@@ -10,31 +11,40 @@ namespace recipesAPI.Controllers
     [Route("RecipeIngredientAmount")]
     public class RecipeIngredientAmountController : ControllerBase
     {
-        private readonly IEntityService<RecipeIngredientAmount> _recipeIngredientAmountService;
+        private readonly IEntityService<RecipeIngredient> _recipeIngredientAmountService;
+        private readonly IValidator<CreateRecipeIngredientAmountRequest> _validator;
 
-        public RecipeIngredientAmountController(IEntityService<RecipeIngredientAmount> recipeIngredientAmountService)
+        public RecipeIngredientAmountController(IEntityService<RecipeIngredient> recipeIngredientAmountService, IValidator<CreateRecipeIngredientAmountRequest> validator)
         {
             _recipeIngredientAmountService = recipeIngredientAmountService;
+            _validator = validator;
         }
 
         [HttpPost]
         public async Task<ActionResult<RecipeIngredientAmountResponse>> AddRecipeIngredientAmount(CreateRecipeIngredientAmountRequest request)
         {
-            var recipeIngredientAmount = new RecipeIngredientAmount
+            var validationResult = await _validator.ValidateAsync(request);
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+            var recipeIngredientAmount = new RecipeIngredient
             {
                 RecipeId = request.RecipeId,
-                IngredientAmountId = request.IngredientAmountId,
+                IngredientId = request.IngredientId,
                 CreatedOn = DateTime.UtcNow,
-                LastModifiedOn = DateTime.UtcNow
+                LastModifiedOn = DateTime.UtcNow,
+                IngredientAmount= request.IngredientAmount
             };
 
             await _recipeIngredientAmountService.AddAsync(recipeIngredientAmount);
 
             var response = new RecipeIngredientAmountResponse
             {
-                RecipeIngredientAmountId = recipeIngredientAmount.RecipeIngredientAmountId,
+                RecipeIngredientAmountId = recipeIngredientAmount.RecipeIngredientId,
                 RecipeId = recipeIngredientAmount.RecipeId,
-                IngredientAmountId = recipeIngredientAmount.IngredientAmountId,
+                IngredientId = recipeIngredientAmount.IngredientId,
+                Amount=recipeIngredientAmount.IngredientAmount,
                 CreatedOn = recipeIngredientAmount.CreatedOn,
                 LastModifiedOn = recipeIngredientAmount.LastModifiedOn
             };
