@@ -1,0 +1,12 @@
+C:\recipes\recipesCommon\bin\Debug\net8.0\recipesCommon.deps.json
+C:\recipes\recipesCommon\bin\Debug\net8.0\recipesCommon.dll
+C:\recipes\recipesCommon\bin\Debug\net8.0\recipesCommon.pdb
+C:\recipes\recipesCommon\obj\Debug\net8.0\recipesCommon.csproj.AssemblyReference.cache
+C:\recipes\recipesCommon\obj\Debug\net8.0\recipesCommon.GeneratedMSBuildEditorConfig.editorconfig
+C:\recipes\recipesCommon\obj\Debug\net8.0\recipesCommon.AssemblyInfoInputs.cache
+C:\recipes\recipesCommon\obj\Debug\net8.0\recipesCommon.AssemblyInfo.cs
+C:\recipes\recipesCommon\obj\Debug\net8.0\recipesCommon.csproj.CoreCompileInputs.cache
+C:\recipes\recipesCommon\obj\Debug\net8.0\recipesCommon.dll
+C:\recipes\recipesCommon\obj\Debug\net8.0\refint\recipesCommon.dll
+C:\recipes\recipesCommon\obj\Debug\net8.0\recipesCommon.pdb
+C:\recipes\recipesCommon\obj\Debug\net8.0\ref\recipesCommon.dll
