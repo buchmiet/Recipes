@@ -2,7 +2,7 @@
 using recipesCommon.Interfaces;
 using System.Linq.Expressions;
 
-namespace recipesCommon.DataAccess
+namespace recipesApi.DataAccess
 {
     public class EntityService<TEntity> : IEntityService<TEntity> where TEntity : class
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace recipesCommon.DataAccess
+namespace recipesApi.DataAccess
 {
     public class RecipesDbContext : DbContext
     {
@@ -24,7 +24,7 @@ namespace recipesCommon.DataAccess
                 entity.HasOne(d => d.Author)
                     .WithMany(p => p.Recipes)
                     .HasForeignKey(d => d.AuthorId)
-                    .OnDelete(DeleteBehavior.Restrict); // Strategia usuwania
+                    .OnDelete(DeleteBehavior.Cascade); // Strategia usuwania
 
 
 
@@ -233,22 +233,18 @@ namespace recipesCommon.DataAccess
         public class RecipeIngredient
         {
             public int RecipeIngredientId { get; set; }
-            public int RecipeId { get; set; } // Klucz obcy do Recipe
-            public int IngredientId { get; set; } // Klucz obcy do Ingredient
+            public int RecipeId { get; set; } // FK to Recipe
+            public int IngredientId { get; set; } // FK to Ingredient
             public DateTime CreatedOn { get; set; }
             public DateTime LastModifiedOn { get; set; }
             public float IngredientAmount  { get; set; }
-
-            // Relacje do Recipe i Ingredient
+        
             public virtual Recipe RecipeNavigation { get; set; }
             public virtual Ingredient IngredientNavigation { get; set; }
 
         }
 
-
-
-
-
+ 
 
         public class Recipe
         {
@@ -256,18 +252,17 @@ namespace recipesCommon.DataAccess
             public string Title { get; set; }
             public int CookingTime { get; set; }
             public int AuthorId { get; set; }
+            public string SearchTerms { get; set; }
             public DateTime CreatedOn { get; set; }
             public DateTime LastModifiedOn { get; set; }
 
             // Relacje
             public virtual Author Author { get; set; }
-            public virtual ICollection<RecipeIngredient> RecipeIngredientAmounts { get; set; }
             public virtual ICollection<RecipeUtensil> RecipeUtensils { get; set; }
             public virtual ICollection<RecipeCookingAppliance> RecipeCookingAppliances { get; set; }
             public virtual ICollection<CookingAction> CookingActions { get; set; }
             public virtual ICollection<PhotoRecipe> PhotoRecipes { get; set; }
             public virtual ICollection<RecipeTagRelation> RecipeTagRelations { get; set; }
-
             public virtual ICollection<RecipeIngredient> RecipeIngridientRelations { get; set; }
 
         }
@@ -298,13 +293,11 @@ namespace recipesCommon.DataAccess
         public class CookingAction
         {
             public int CookingActionId { get; set; }
-            public int RecipeId { get; set; } // Klucz obcy do Recipe
-            public string Name { get; set; } // Opis działania
-            public int Position { get; set; } // Pozycja akcji w przepisie
+            public int RecipeId { get; set; }  
+            public string Name { get; set; } 
+            public int Position { get; set; } 
             public DateTime CreatedOn { get; set; }
-
-
-            // Relacja do Recipe
+            
             public virtual Recipe Recipe { get; set; }
         }
 
@@ -390,7 +383,7 @@ namespace recipesCommon.DataAccess
         public class IngredientType
         {
             public int IngredientTypeId { get; set; }
-            public string Name { get; set; } // np. "Mięso", "Warzywo", "Owoc"
+            public string Name { get; set; } 
             public DateTime CreatedOn { get; set; }
             public DateTime LastModifiedOn { get; set; }
             public virtual ICollection<Ingredient> Ingredients { get; set; }

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using recipesCommon.Interfaces;
-using static recipesCommon.DataAccess.RecipesDbContext;
+using static recipesApi.DataAccess.RecipesDbContext;
 
 public class CreatePhotoRecipeRequest
 {

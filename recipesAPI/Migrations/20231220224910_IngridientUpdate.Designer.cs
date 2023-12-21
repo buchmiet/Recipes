@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using recipesCommon.DataAccess;
+using recipesApi.DataAccess;
 
 #nullable disable
 
@@ -22,7 +22,7 @@ namespace recipesAPI.Migrations
                 .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+Author", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+Author", b =>
                 {
                     b.Property<int>("AuthorId")
                         .ValueGeneratedOnAdd()
@@ -43,7 +43,7 @@ namespace recipesAPI.Migrations
                     b.ToTable("Authors");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+CookingAction", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+CookingAction", b =>
                 {
                     b.Property<int>("CookingActionId")
                         .ValueGeneratedOnAdd()
@@ -70,7 +70,7 @@ namespace recipesAPI.Migrations
                     b.ToTable("CookingActions");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+CookingAppliance", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+CookingAppliance", b =>
                 {
                     b.Property<int>("CookingApplianceId")
                         .ValueGeneratedOnAdd()
@@ -91,7 +91,7 @@ namespace recipesAPI.Migrations
                     b.ToTable("CookingAppliances");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+Ingredient", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+Ingredient", b =>
                 {
                     b.Property<int>("IngredientId")
                         .ValueGeneratedOnAdd()
@@ -123,7 +123,7 @@ namespace recipesAPI.Migrations
                     b.ToTable("Ingredients");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+IngredientAmountType", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+IngredientAmountType", b =>
                 {
                     b.Property<int>("IngredientAmountTypeId")
                         .ValueGeneratedOnAdd()
@@ -138,7 +138,7 @@ namespace recipesAPI.Migrations
                     b.ToTable("IngredientAmountTypes");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+IngredientType", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+IngredientType", b =>
                 {
                     b.Property<int>("IngredientTypeId")
                         .ValueGeneratedOnAdd()
@@ -159,7 +159,7 @@ namespace recipesAPI.Migrations
                     b.ToTable("IngredientTypes");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+Photo", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+Photo", b =>
                 {
                     b.Property<int>("PhotoId")
                         .ValueGeneratedOnAdd()
@@ -177,7 +177,7 @@ namespace recipesAPI.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+PhotoRecipe", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+PhotoRecipe", b =>
                 {
                     b.Property<int>("PhotoRecipeId")
                         .ValueGeneratedOnAdd()
@@ -204,7 +204,7 @@ namespace recipesAPI.Migrations
                     b.ToTable("PhotoRecipes");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+Recipe", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+Recipe", b =>
                 {
                     b.Property<int>("RecipeId")
                         .ValueGeneratedOnAdd()
@@ -234,7 +234,7 @@ namespace recipesAPI.Migrations
                     b.ToTable("Recipes");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+RecipeCookingAppliance", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+RecipeCookingAppliance", b =>
                 {
                     b.Property<int>("RecipeCookingApplianceId")
                         .ValueGeneratedOnAdd()
@@ -258,7 +258,7 @@ namespace recipesAPI.Migrations
                     b.ToTable("RecipeCookingAppliances");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+RecipeIngredient", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+RecipeIngredient", b =>
                 {
                     b.Property<int>("RecipeIngredientId")
                         .ValueGeneratedOnAdd()
@@ -293,7 +293,7 @@ namespace recipesAPI.Migrations
                     b.ToTable("RecipeIngredientAmounts");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+RecipeTagRelation", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+RecipeTagRelation", b =>
                 {
                     b.Property<int>("RecipeTagRelationId")
                         .ValueGeneratedOnAdd()
@@ -317,7 +317,7 @@ namespace recipesAPI.Migrations
                     b.ToTable("RecipeTagRelations");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+RecipeUtensil", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+RecipeUtensil", b =>
                 {
                     b.Property<int>("RecipeUtensilId")
                         .ValueGeneratedOnAdd()
@@ -341,7 +341,7 @@ namespace recipesAPI.Migrations
                     b.ToTable("RecipeUtensils");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+Tag", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+Tag", b =>
                 {
                     b.Property<int>("TagId")
                         .ValueGeneratedOnAdd()
@@ -360,7 +360,7 @@ namespace recipesAPI.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+Utensil", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+Utensil", b =>
                 {
                     b.Property<int>("UtensilId")
                         .ValueGeneratedOnAdd()
@@ -382,9 +382,9 @@ namespace recipesAPI.Migrations
                     b.ToTable("Utensils");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+CookingAction", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+CookingAction", b =>
                 {
-                    b.HasOne("recipesCommon.DataAccess.RecipesDbContext+Recipe", "Recipe")
+                    b.HasOne("recipesApi.DataAccess.RecipesDbContext+Recipe", "Recipe")
                         .WithMany("CookingActions")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -393,15 +393,15 @@ namespace recipesAPI.Migrations
                     b.Navigation("Recipe");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+Ingredient", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+Ingredient", b =>
                 {
-                    b.HasOne("recipesCommon.DataAccess.RecipesDbContext+IngredientAmountType", "IngredientAmountTypeNavigation")
+                    b.HasOne("recipesApi.DataAccess.RecipesDbContext+IngredientAmountType", "IngredientAmountTypeNavigation")
                         .WithMany("Ingredients")
                         .HasForeignKey("IngredientAmountTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("recipesCommon.DataAccess.RecipesDbContext+IngredientType", "IngredientTypeNavigation")
+                    b.HasOne("recipesApi.DataAccess.RecipesDbContext+IngredientType", "IngredientTypeNavigation")
                         .WithMany("Ingredients")
                         .HasForeignKey("Type")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -412,15 +412,15 @@ namespace recipesAPI.Migrations
                     b.Navigation("IngredientTypeNavigation");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+PhotoRecipe", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+PhotoRecipe", b =>
                 {
-                    b.HasOne("recipesCommon.DataAccess.RecipesDbContext+Photo", "Photo")
+                    b.HasOne("recipesApi.DataAccess.RecipesDbContext+Photo", "Photo")
                         .WithMany("PhotoRecipes")
                         .HasForeignKey("PhotoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("recipesCommon.DataAccess.RecipesDbContext+Recipe", "Recipe")
+                    b.HasOne("recipesApi.DataAccess.RecipesDbContext+Recipe", "Recipe")
                         .WithMany("PhotoRecipes")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -431,9 +431,9 @@ namespace recipesAPI.Migrations
                     b.Navigation("Recipe");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+Recipe", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+Recipe", b =>
                 {
-                    b.HasOne("recipesCommon.DataAccess.RecipesDbContext+Author", "Author")
+                    b.HasOne("recipesApi.DataAccess.RecipesDbContext+Author", "Author")
                         .WithMany("Recipes")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -442,15 +442,15 @@ namespace recipesAPI.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+RecipeCookingAppliance", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+RecipeCookingAppliance", b =>
                 {
-                    b.HasOne("recipesCommon.DataAccess.RecipesDbContext+CookingAppliance", "CookingAppliance")
+                    b.HasOne("recipesApi.DataAccess.RecipesDbContext+CookingAppliance", "CookingAppliance")
                         .WithMany("RecipeCookingAppliances")
                         .HasForeignKey("CookingApplianceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("recipesCommon.DataAccess.RecipesDbContext+Recipe", "Recipe")
+                    b.HasOne("recipesApi.DataAccess.RecipesDbContext+Recipe", "Recipe")
                         .WithMany("RecipeCookingAppliances")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -461,21 +461,21 @@ namespace recipesAPI.Migrations
                     b.Navigation("Recipe");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+RecipeIngredient", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+RecipeIngredient", b =>
                 {
-                    b.HasOne("recipesCommon.DataAccess.RecipesDbContext+Ingredient", "IngredientNavigation")
+                    b.HasOne("recipesApi.DataAccess.RecipesDbContext+Ingredient", "IngredientNavigation")
                         .WithMany("RecipeIngredients")
                         .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("recipesCommon.DataAccess.RecipesDbContext+Recipe", "RecipeNavigation")
+                    b.HasOne("recipesApi.DataAccess.RecipesDbContext+Recipe", "RecipeNavigation")
                         .WithMany("RecipeIngridientRelations")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("recipesCommon.DataAccess.RecipesDbContext+Recipe", null)
+                    b.HasOne("recipesApi.DataAccess.RecipesDbContext+Recipe", null)
                         .WithMany("RecipeIngredientAmounts")
                         .HasForeignKey("RecipeId1");
 
@@ -484,15 +484,15 @@ namespace recipesAPI.Migrations
                     b.Navigation("RecipeNavigation");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+RecipeTagRelation", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+RecipeTagRelation", b =>
                 {
-                    b.HasOne("recipesCommon.DataAccess.RecipesDbContext+Recipe", "RecipeNavigation")
+                    b.HasOne("recipesApi.DataAccess.RecipesDbContext+Recipe", "RecipeNavigation")
                         .WithMany("RecipeTagRelations")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("recipesCommon.DataAccess.RecipesDbContext+Tag", "TagNavigation")
+                    b.HasOne("recipesApi.DataAccess.RecipesDbContext+Tag", "TagNavigation")
                         .WithMany("RecipeTagRelations")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -503,15 +503,15 @@ namespace recipesAPI.Migrations
                     b.Navigation("TagNavigation");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+RecipeUtensil", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+RecipeUtensil", b =>
                 {
-                    b.HasOne("recipesCommon.DataAccess.RecipesDbContext+Recipe", "RecipeNavigation")
+                    b.HasOne("recipesApi.DataAccess.RecipesDbContext+Recipe", "RecipeNavigation")
                         .WithMany("RecipeUtensils")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("recipesCommon.DataAccess.RecipesDbContext+Utensil", "UtensilNavigation")
+                    b.HasOne("recipesApi.DataAccess.RecipesDbContext+Utensil", "UtensilNavigation")
                         .WithMany("RecipeUtensilsRelations")
                         .HasForeignKey("UtensilId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -522,37 +522,37 @@ namespace recipesAPI.Migrations
                     b.Navigation("UtensilNavigation");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+Author", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+Author", b =>
                 {
                     b.Navigation("Recipes");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+CookingAppliance", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+CookingAppliance", b =>
                 {
                     b.Navigation("RecipeCookingAppliances");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+Ingredient", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+Ingredient", b =>
                 {
                     b.Navigation("RecipeIngredients");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+IngredientAmountType", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+IngredientAmountType", b =>
                 {
                     b.Navigation("Ingredients");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+IngredientType", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+IngredientType", b =>
                 {
                     b.Navigation("Ingredients");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+Photo", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+Photo", b =>
                 {
                     b.Navigation("PhotoRecipes");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+Recipe", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+Recipe", b =>
                 {
                     b.Navigation("CookingActions");
 
@@ -569,12 +569,12 @@ namespace recipesAPI.Migrations
                     b.Navigation("RecipeUtensils");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+Tag", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+Tag", b =>
                 {
                     b.Navigation("RecipeTagRelations");
                 });
 
-            modelBuilder.Entity("recipesCommon.DataAccess.RecipesDbContext+Utensil", b =>
+            modelBuilder.Entity("recipesApi.DataAccess.RecipesDbContext+Utensil", b =>
                 {
                     b.Navigation("RecipeUtensilsRelations");
                 });

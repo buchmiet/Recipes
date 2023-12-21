@@ -2,7 +2,7 @@
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore;
-using recipesCommon.DataAccess;
+using recipesApi.DataAccess;
 
 namespace recipesAPI
 {

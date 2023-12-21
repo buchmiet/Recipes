@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using recipesCommon.Interfaces;
 
-namespace recipesCommon.DataAccess
+namespace recipesApi.DataAccess
 {
     public class UnitOfWork:IUnitOfWork
     {

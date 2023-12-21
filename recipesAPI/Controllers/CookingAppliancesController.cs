@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using recipesCommon.Interfaces;
-using recipesCommon.DataAccess;
-using static recipesCommon.DataAccess.RecipesDbContext;
-using recipesCommon.Model.Request;
+using recipesApi.DataAccess;
+using static recipesApi.DataAccess.RecipesDbContext;
+using recipesApi.Model.Request;
 using Microsoft.EntityFrameworkCore;
-using recipesCommon.Model.Response;
+using recipesApi.Model.Response;
 using FluentValidation;
 
 namespace recipesAPI.Controllers

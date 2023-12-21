@@ -1,9 +1,11 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using recipesAPI.Model.Request;
+using recipesAPI.Services;
 using recipesCommon.Interfaces;
-using recipesCommon.Model.Request;
-using recipesCommon.Model.Response;
-using static recipesCommon.DataAccess.RecipesDbContext;
+using recipesApi.Model.Request;
+using recipesApi.Model.Response;
+using static recipesApi.DataAccess.RecipesDbContext;
 
 namespace recipesAPI.Controllers
 {
@@ -12,18 +14,20 @@ namespace recipesAPI.Controllers
     public class RecipeController : ControllerBase
     {
         private readonly IEntityService<Recipe> _recipeService;
-        private readonly IValidator<CreateRecipeRequest> _validator;
+        private readonly IValidator<CreateRecipeRequest> _createValidator;
+        private readonly ISearchService _searchService;
 
-        public RecipeController(IEntityService<Recipe> recipeService, IValidator<CreateRecipeRequest> validator)
+        public RecipeController(ISearchService searchService, IEntityService<Recipe> recipeService, IValidator<CreateRecipeRequest> createValidator)
         {
             _recipeService = recipeService;
-            _validator = validator;
+            _createValidator = createValidator;
+            _searchService = searchService;
         }
 
         [HttpPost]
         public async Task<ActionResult<RecipeResponse>> AddRecipe(CreateRecipeRequest request)
         {
-            var validationResult = await _validator.ValidateAsync(request);
+            var validationResult = await _createValidator.ValidateAsync(request);
             if (!validationResult.IsValid)
             {
                 return BadRequest(validationResult.Errors);
@@ -36,10 +40,9 @@ namespace recipesAPI.Controllers
                 CreatedOn = DateTime.UtcNow,
                 LastModifiedOn = DateTime.UtcNow
             };
-
           
-
             await _recipeService.AddAsync(recipe);
+            await _searchService.UpdateSearchtermForRecipe(recipe.RecipeId);
 
             var response = new RecipeResponse
             {
@@ -53,6 +56,70 @@ namespace recipesAPI.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<RecipeResponse>> GetRecipe(int id)
+        {
+            var recipe = await _recipeService.GetByIdAsync(id);
+            if (recipe == null)
+            {
+                return NotFound();
+            }
+
+            var response = MapToRecipeResponse(recipe);
+            return Ok(response);
+        }
+
+     
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateRecipe(int id, UpdateRecipeRequest request)
+        {
+            var recipe = await _recipeService.GetByIdAsync(id);
+            if (recipe == null)
+            {
+                return NotFound();
+            }
+
+            recipe.Title = request.Title;
+            recipe.CookingTime = request.CookingTime;
+          
+            recipe.LastModifiedOn = DateTime.UtcNow;
+            await _recipeService.UpdateAsync(recipe);
+            await _searchService.UpdateSearchtermForRecipe(recipe.RecipeId);
+
+            return NoContent();
+        }
+
+       
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRecipe(int id)
+        {
+            var recipe = await _recipeService.GetByIdAsync(id);
+            if (recipe == null)
+            {
+                return NotFound();
+            }
+
+            await _recipeService.DeleteAsync(recipe);
+
+            return NoContent();
+        }
+
+        private RecipeResponse MapToRecipeResponse(Recipe recipe)
+        {
+            return new RecipeResponse
+            {
+                RecipeId = recipe.RecipeId,
+                Title = recipe.Title,
+                CookingTime = recipe.CookingTime,
+                AuthorId = recipe.AuthorId,
+                CreatedOn = recipe.CreatedOn,
+                LastModifiedOn = recipe.LastModifiedOn
+            };
+        }
     }
 
+
 }
+
+

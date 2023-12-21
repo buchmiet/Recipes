@@ -1,7 +1,8 @@
-﻿using recipesCommon.DataAccess;
+﻿using recipesApi.DataAccess;
+using recipesAPI.Services;
 using recipesCommon.Interfaces;
 using System.Linq;
-using static recipesCommon.DataAccess.RecipesDbContext;
+using static recipesApi.DataAccess.RecipesDbContext;
 
 namespace recipesAPI.DataAccess
 {
@@ -433,7 +434,6 @@ namespace recipesAPI.DataAccess
             "Serve as a side dish or on top of grilled steak."
         };
 
-
         public static List<string> Utensils = new List<string>
         {
             "Knife",
@@ -602,7 +602,6 @@ namespace recipesAPI.DataAccess
     "Flaxseeds",
     "Poppy seeds"
 };
-
 
         public static List<string> Units = new List<string>
         {
@@ -818,6 +817,200 @@ namespace recipesAPI.DataAccess
     "Cheese"
 };
 
+        public static List<string> RecipeTitles = new List<string>
+{
+    "Tomato Soup",
+    "Chicken Alfredo",
+    "Spaghetti Bolognese",
+    "Beef Stroganoff",
+    "Caesar Salad",
+    "Lemon Garlic Shrimp",
+    "Vegetable Stir-Fry",
+    "Baked Salmon",
+    "Mushroom Risotto",
+    "Chicken Fajitas",
+    "Pepperoni Pizza",
+    "Beef Tacos",
+    "Vegetable Curry",
+    "Garlic Butter Steak",
+    "Shrimp Scampi",
+    "Eggplant Parmesan",
+    "Caprese Salad",
+    "Chickpea Curry",
+    "Butternut Squash Soup",
+    "Sushi Rolls",
+    "Pasta Carbonara",
+    "Greek Salad",
+    "Beef and Broccoli",
+    "Chicken Enchiladas",
+    "Crispy Fried Chicken",
+    "Egg Fried Rice",
+    "Teriyaki Salmon",
+    "Pork Tenderloin",
+    "Tofu Stir-Fry",
+    "Lobster Bisque",
+    "Peanut Butter Cookies",
+    "Chocolate Cake",
+    "Apple Pie",
+    "Blueberry Muffins",
+    "Banana Bread",
+    "Pumpkin Soup",
+    "Goulash",
+    "Lentil Soup",
+    "Mango Salsa",
+    "Cobb Salad",
+    "Clam Chowder",
+    "Tuna Salad",
+    "Ratatouille",
+    "Chicken Pot Pie",
+    "Beef Wellington",
+    "Lemon Meringue Pie",
+    "Pancakes",
+    "French Toast",
+    "Pasta Primavera",
+    "Cajun Shrimp",
+    "Baked Ziti",
+    "Chili Con Carne",
+    "Spinach and Artichoke Dip",
+    "Guacamole",
+    "Buffalo Wings",
+    "Teriyaki Chicken",
+    "Pesto Pasta",
+    "Crispy Tofu",
+    "Roast Turkey",
+    "Lemon Herb Chicken",
+    "Cucumber Salad",
+    "Honey Mustard Salmon",
+    "Stuffed Bell Peppers",
+    "Quiche Lorraine",
+    "Sausage and Peppers",
+    "Fried Rice",
+    "Beef and Noodle Soup",
+    "Baked Potato",
+    "Shrimp Cocktail",
+    "Chicken Caesar Wrap",
+    "Chicken Shawarma",
+    "Ginger Beef",
+    "Pork Carnitas",
+    "Black Bean Soup",
+    "Chicken Marsala",
+    "Lemon Garlic Roast Chicken",
+    "Cherry Pie",
+    "Strawberry Shortcake",
+    "Blueberry Pancakes",
+    "Beef and Mushroom Pie",
+    "Sesame Chicken",
+    "Chicken Noodle Soup",
+    "Tofu and Broccoli Stir-Fry",
+    "Beef Tenders",
+    "Pumpkin Pie",
+    "Cornbread",
+    "Pecan Pie",
+    "Sweet Potato Casserole",
+    "Chicken and Rice Soup",
+    "Pasta Alfredo",
+    "Lobster Roll",
+    "Lemon Butter Shrimp",
+    "Steak Fajitas",
+    "Baked Cod",
+    "Mango Chicken",
+    "Bacon and Egg Breakfast Burrito",
+    "Chicken Quesadillas",
+    "Chicken Parmesan",
+    "Roasted Brussels Sprouts",
+    "Honey Garlic Salmon",
+    "Spaghetti Carbonara",
+    "Pork Chops",
+    "Cheeseburger",
+    "Fish Tacos",
+    "Potato Leek Soup",
+    "Beef and Guinness Stew",
+    "Chicken Tikka Masala",
+    "Roast Beef",
+    "Creamed Spinach",
+    "Pulled Pork Sandwiches",
+    "Mushroom Soup",
+    "Lemon Bars",
+    "Chocolate Brownies",
+    "Pumpkin Muffins",
+    "Cinnamon Rolls",
+    "Garlic Shrimp Pasta",
+    "Beef and Bean Chili",
+    "Pork and Apple Casserole",
+    "Baked Ham",
+    "Shrimp and Grits",
+    "Beef Burritos",
+    "Chicken Kebabs",
+    "Eggplant Lasagna",
+    "Cesar Salad Wrap",
+    "Cherry Cheesecake",
+    "Lemon Pound Cake",
+    "Tuna Noodle Casserole",
+    "Vegetable Lasagna",
+    "Pork Ribs",
+    "Spinach and Feta Stuffed Chicken",
+    "Potato Salad",
+    "Pasta Salad",
+    "Chocolate Chip Cookies",
+    "Apple Crisp",
+    "Key Lime Pie",
+    "Strawberry Sorbet",
+    "Banana Split",
+    "Peach Cobbler",
+    "Chocolate Pudding",
+    "Coconut Macaroons",
+    "Pineapple Upside-Down Cake",
+    "Red Velvet Cupcakes",
+    "Carrot Cake",
+    "Black Forest Cake",
+    "Lemon Sorbet",
+    "Mint Chocolate Chip Ice Cream",
+    "Tiramisu",
+    "Chocolate Fondue",
+    "Caramel Popcorn",
+    "French Onion Soup",
+    "Peking Duck",
+    "Chicken Satay",
+    "Baked Brie",
+    "Sausage Rolls",
+    "Scotch Eggs",
+    "Beef Wellington",
+    "Shrimp Po' Boy",
+    "Chicken and Waffles",
+    "Honey Mustard Chicken",
+    "Beef Stew",
+    "Shrimp and Lobster Bisque",
+    "Chicken Fettuccine Alfredo",
+    "Pecan Pie",
+    "Apple Strudel",
+    "Lemon Curd",
+    "Fruit Salad",
+    "Banana Foster",
+    "Mango Lassi",
+    "Clam Linguine",
+    "Chicken Parmesan",
+    "Basil Pesto Pasta",
+    "Beef and Vegetable Stir-Fry",
+    "Pineapple Fried Rice",
+    "Chocolate Soufflé",
+    "Strawberry Cheesecake",
+    "Peach Pie",
+    "Cherry Cobbler",
+    "Raspberry Sorbet",
+    "Vanilla Bean Ice Cream",
+    "Chocolate Truffles",
+    "Creme Brulee",
+    "Tiramisu",
+    "Apple Crumble",
+    "Pumpkin Cheesecake",
+    "Lemon Tart",
+    "Blueberry Crisp",
+    "Cherry Clafoutis",
+    "Panna Cotta"
+};
+
+
+
         public static List<IngredientType> GenerateIngredientTypes()
         {
             var zwrotka = new List<IngredientType>();
@@ -966,13 +1159,163 @@ namespace recipesAPI.DataAccess
         }
 
 
+        public static List<Recipe> GenerateRandomRecipes(List<Author> authors)
+        {
+            var zwrotka = new List<Recipe>();
+            Random random = new Random();
+
+            foreach (string s in RecipeTitles)
+            {
+                DateTime now = DateTime.Now;
+                DateTime createdOn = now.AddDays(-random.Next(365));
+                DateTime lastModifiedOn = createdOn.AddHours(random.Next(24));
+                zwrotka.Add(new Recipe
+                {
+                    Title = s,
+                    CreatedOn = createdOn,
+                    LastModifiedOn = lastModifiedOn,
+                    CookingTime = random.Next(8) * 15,
+                    SearchTerms=s,
+                    AuthorId = authors.ElementAt(random.Next(authors.Count)).AuthorId,                   
+                });   
+            }
+            return zwrotka;
+        }
+
+        public static List<RecipeIngredient> GenerateRandomRecipeIngredients(List<Recipe> recipes,List<Ingredient> ingredients)
+        {
+            var zwrotka = new List<RecipeIngredient>();
+            Random random = new Random();
+
+            foreach (var recipe in recipes)
+            {   
+                int amountOfIngredients=random.Next(1, 5);
+                for (int i = 0;i< amountOfIngredients; i++)
+                {
+                    DateTime createdOn = recipe.CreatedOn.AddHours(random.Next(24));
+                    DateTime lastModifiedOn = createdOn.AddHours(random.Next(24));
+                    zwrotka.Add(new RecipeIngredient
+                    {
+                        CreatedOn = createdOn,
+                        LastModifiedOn = lastModifiedOn,
+                        RecipeId = recipe.RecipeId,
+                        IngredientId = ingredients.ElementAt(random.Next(ingredients.Count)).IngredientId,
+                        IngredientAmount = random.Next(5)
+                    }); 
+                }              
+            }
+            return zwrotka;
+        }
+
+        public static List<PhotoRecipe> GenerateRandomPhotoRecipes(List<Recipe> recipes, List<Photo> photos)
+        {
+            var zwrotka = new List<PhotoRecipe>();
+            Random random = new Random();
+
+            foreach (var recipe in recipes)
+            {
+                int amountOfPhotos = random.Next(1, 5);
+                for (int i = 0; i < amountOfPhotos; i++)
+                {
+                    DateTime createdOn = recipe.CreatedOn.AddHours(random.Next(24));
+
+                    zwrotka.Add(new PhotoRecipe
+                    {
+                        CreatedOn = createdOn,                       
+                        RecipeId = recipe.RecipeId,                        
+                        PhotoId=photos.ElementAt(random.Next(photos.Count)).PhotoId,
+                        Position=i
+                    });
+                }
+            }
+            return zwrotka;
+        }
+
+        public static List<RecipeCookingAppliance> GenerateRandomRecipeCookingAppliances(List<Recipe> recipes, List<CookingAppliance> cookingAppliances)
+        {
+            var zwrotka = new List<RecipeCookingAppliance>();
+            Random random = new Random();
+
+            foreach (var recipe in recipes)
+            {
+                int amountOfCookingAppliances = random.Next(1, 3);
+                for (int i = 0; i < amountOfCookingAppliances; i++)
+                {
+                    DateTime createdOn = recipe.CreatedOn.AddHours(random.Next(24));             
+                    zwrotka.Add(new RecipeCookingAppliance
+                    {
+                        CreatedOn = createdOn,
+                        RecipeId = recipe.RecipeId,
+                        CookingApplianceId = cookingAppliances.ElementAt(random.Next(cookingAppliances.Count)).CookingApplianceId,   
+                        
+                    });
+                }
+            }
+            return zwrotka;
+        }
+
+        public static List<RecipeUtensil> GenerateRandomRecipeUtensils(List<Recipe> recipes, List<Utensil> utensils)
+        {
+            var zwrotka = new List<RecipeUtensil>();
+            Random random = new Random();
+
+            foreach (var recipe in recipes)
+            {
+                int amountOfutensils = random.Next(1, 3);
+                for (int i = 0; i < amountOfutensils; i++)
+                {
+                    DateTime createdOn = recipe.CreatedOn.AddHours(random.Next(24));
+            
+                    zwrotka.Add(new RecipeUtensil
+                    {
+                        CreatedOn = createdOn,
+                        RecipeId = recipe.RecipeId,
+                        UtensilId = utensils.ElementAt(random.Next(utensils.Count)).UtensilId,
+                    });
+                }
+            }
+            return zwrotka;
+        }
+
+
+        public static List<RecipeTagRelation> GenerateRandomRecipeTagRelation(List<Recipe> recipes, List<Tag> tags)
+        {
+            var zwrotka = new List<RecipeTagRelation>();
+            Random random = new Random();
+
+            foreach (var recipe in recipes)
+            {
+                int amountOftags = random.Next(1, 5);
+                for (int i = 0; i < amountOftags; i++)
+                {
+                    DateTime createdOn = recipe.CreatedOn.AddHours(random.Next(24));
+
+                    zwrotka.Add(new RecipeTagRelation
+                    {
+                        CreatedOn = createdOn,
+                        RecipeId = recipe.RecipeId,
+                        TagId = tags.ElementAt(random.Next(tags.Count)).TagId,
+                    });
+                }
+            }
+            return zwrotka;
+        }
+
+        public static async Task UpdateSearchTerms(ISearchService searchService,List<int> recipeIds)
+        {
+           foreach (var recipeId in recipeIds)
+            {
+                await searchService.UpdateSearchtermForRecipe(recipeId);
+            }
+        }
+
+
         public static async Task Initialize(IServiceProvider serviceProvider)
         {
 
             using (var scope = serviceProvider.CreateScope())
             {
                 var unitOfWork= scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-
 
                 var AuthorService = new EntityService<Author>(unitOfWork);              
                 await AuthorService.AddRangeAsync(GenerateRandomAuthors());
@@ -990,6 +1333,22 @@ namespace recipesAPI.DataAccess
                 await ingredientTypeService.AddRangeAsync(GenerateIngredientTypes());
                 var ingredientService = new EntityService<Ingredient>(unitOfWork);
                 await ingredientService.AddRangeAsync(GenerateRandomIngredients((await ingredientTypeService.GetAllAsync()).ToList(),(await ingredientAmountTypeService.GetAllAsync()) .ToList()) );
+                var recipeService = new EntityService<Recipe>(unitOfWork);
+                await recipeService.AddRangeAsync(GenerateRandomRecipes((await AuthorService.GetAllAsync()).ToList()));
+                var recipeIngredientService = new EntityService<RecipeIngredient>(unitOfWork);
+                await recipeIngredientService.AddRangeAsync(GenerateRandomRecipeIngredients((await recipeService.GetAllAsync()).ToList(), (await ingredientService.GetAllAsync()).ToList()));
+                var photoRecipeService = new EntityService<PhotoRecipe>(unitOfWork);
+                await photoRecipeService.AddRangeAsync(GenerateRandomPhotoRecipes((await recipeService.GetAllAsync()).ToList(), (await photoService.GetAllAsync()).ToList()));
+                var recipeCookingApplianceService = new EntityService<RecipeCookingAppliance>(unitOfWork);
+                await recipeCookingApplianceService.AddRangeAsync(GenerateRandomRecipeCookingAppliances((await recipeService.GetAllAsync()).ToList(), (await cookingApplianceService.GetAllAsync()).ToList()));
+                var recipeUtensilService = new EntityService<RecipeUtensil>(unitOfWork);
+                await recipeUtensilService.AddRangeAsync(GenerateRandomRecipeUtensils((await recipeService.GetAllAsync()).ToList(), (await utensilService.GetAllAsync()).ToList()));
+                var recipeTagRelationService = new EntityService<RecipeTagRelation>(unitOfWork);
+                await recipeTagRelationService.AddRangeAsync(GenerateRandomRecipeTagRelation((await recipeService.GetAllAsync()).ToList(), (await tagService.GetAllAsync()).ToList()));
+
+                var searchService = scope.ServiceProvider.GetRequiredService<ISearchService>();
+                await UpdateSearchTerms(searchService,(await recipeService.GetAllAsync()).Select(p=>p.RecipeId).ToList());
+
             }
         }
 

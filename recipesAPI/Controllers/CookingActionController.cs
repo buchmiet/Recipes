@@ -1,10 +1,12 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using recipesApi.Model.Request;
+using recipesApi.Model.Response;
 using recipesCommon.Interfaces;
-using recipesCommon.Model.Request;
-using recipesCommon.Model.Response;
+
 using System.ComponentModel.DataAnnotations;
-using static recipesCommon.DataAccess.RecipesDbContext;
+using static recipesApi.DataAccess.RecipesDbContext;
+
 
 namespace recipesAPI.Controllers
 {

@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using recipesCommon.Interfaces;
-using recipesCommon.Model.Request;
-using recipesCommon.Model.Response;
-using static recipesCommon.DataAccess.RecipesDbContext;
+using recipesApi.Model.Request;
+using recipesApi.Model.Response;
+using static recipesApi.DataAccess.RecipesDbContext;
 
 namespace recipesAPI.Controllers
 {

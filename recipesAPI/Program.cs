@@ -4,9 +4,10 @@ using Azure.Security.KeyVault.Secrets;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using recipesAPI.DataAccess;
-using recipesCommon.DataAccess;
+using recipesAPI.Services;
+using recipesApi.DataAccess;
 using recipesCommon.Interfaces;
-using recipesCommon.Model.Request;
+using recipesApi.Model.Request;
 using System;
 
 
@@ -47,6 +48,8 @@ namespace recipesAPI
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
             builder.Services.AddScoped(typeof(IEntityService<>), typeof(EntityService<>));
+
+            builder.Services.AddScoped<ISearchService, SearchService>();
 
             builder.Services.AddValidatorsFromAssemblyContaining<CreateAuthorRequestValidator>();
 

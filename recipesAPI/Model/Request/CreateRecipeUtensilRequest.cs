@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
 using recipesCommon.Interfaces;
-using static recipesCommon.DataAccess.RecipesDbContext;
+using static recipesApi.DataAccess.RecipesDbContext;
 
-namespace recipesCommon.Model.Request
+namespace recipesApi.Model.Request
 {
     public class CreateRecipeUtensilRequest
     {

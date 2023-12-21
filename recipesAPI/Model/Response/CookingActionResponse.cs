@@ -1,4 +1,4 @@
-﻿namespace recipesCommon.Model.Response
+﻿namespace recipesApi.Model.Response
 {
     public class CookingActionResponse
     {

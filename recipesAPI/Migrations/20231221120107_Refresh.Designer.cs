@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using recipesApi.DataAccess;
 
@@ -10,9 +11,11 @@ using recipesApi.DataAccess;
 namespace recipesAPI.Migrations
 {
     [DbContext(typeof(RecipesDbContext))]
-    partial class RecipesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231221120107_Refresh")]
+    partial class Refresh
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,10 +222,6 @@ namespace recipesAPI.Migrations
                     b.Property<DateTime>("LastModifiedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("SearchTerms")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -280,11 +279,16 @@ namespace recipesAPI.Migrations
                     b.Property<int>("RecipeId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("RecipeId1")
+                        .HasColumnType("int");
+
                     b.HasKey("RecipeIngredientId");
 
                     b.HasIndex("IngredientId");
 
                     b.HasIndex("RecipeId");
+
+                    b.HasIndex("RecipeId1");
 
                     b.ToTable("RecipeIngredientAmounts");
                 });
@@ -432,7 +436,7 @@ namespace recipesAPI.Migrations
                     b.HasOne("recipesApi.DataAccess.RecipesDbContext+Author", "Author")
                         .WithMany("Recipes")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -470,6 +474,10 @@ namespace recipesAPI.Migrations
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("recipesApi.DataAccess.RecipesDbContext+Recipe", null)
+                        .WithMany("RecipeIngredientAmounts")
+                        .HasForeignKey("RecipeId1");
 
                     b.Navigation("IngredientNavigation");
 
@@ -551,6 +559,8 @@ namespace recipesAPI.Migrations
                     b.Navigation("PhotoRecipes");
 
                     b.Navigation("RecipeCookingAppliances");
+
+                    b.Navigation("RecipeIngredientAmounts");
 
                     b.Navigation("RecipeIngridientRelations");
 
