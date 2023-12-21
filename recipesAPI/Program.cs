@@ -9,6 +9,7 @@ using recipesApi.DataAccess;
 using recipesCommon.Interfaces;
 using recipesApi.Model.Request;
 using System;
+using Serilog;
 
 
 
@@ -21,7 +22,11 @@ namespace recipesAPI
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-          
+
+            Log.Logger = new LoggerConfiguration()
+           .ReadFrom.Configuration(builder.Configuration)
+           .CreateLogger();
+
             builder.Services.AddControllers();             
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
