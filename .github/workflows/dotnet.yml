@@ -22,10 +22,10 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Restore dependencies
-      run: dotnet restore recipesAPI/recipesAPI.sln
+      run: dotnet restore recipesAPI.sln
 
     - name: Build
-      run: dotnet build recipesAPI/recipesAPI.sln --no-restore
+      run: dotnet build recipesAPI.sln --no-restore
 
     - name: Test
       run: dotnet test recipesTest/recipesTest.csproj --no-build --verbosity normal
