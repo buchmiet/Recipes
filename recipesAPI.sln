@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "recipesAPI", "recipesApi\recipesAPI.csproj", "{62416CFF-6822-4FEB-B453-0A50EFC2CD6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "recipesAPI", "recipesAPI\recipesAPI.csproj", "{62416CFF-6822-4FEB-B453-0A50EFC2CD6E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "recipesCommon", "recipesCommon\recipesCommon.csproj", "{5E89AD50-FD44-4F82-ACE8-227D13DFFBB6}"
 EndProject
