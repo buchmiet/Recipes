@@ -275,7 +275,7 @@ namespace recipesCommon.DataAccess
         public class Photo
         {
             public int PhotoId { get; set; }
-            public string Address { get; set; } // Ścieżka do zdjęcia lub URL
+            public string Address { get; set; } 
 
             public DateTime CreatedOn { get; set; }
 
@@ -313,7 +313,7 @@ namespace recipesCommon.DataAccess
             public int CookingApplianceId { get; set; }
             public string Name { get; set; } // np. "Mikrofalówka"
             public DateTime CreatedOn { get; set; }
-            public DateTime LastModifiedOn { get; set; }
+       
 
             public virtual ICollection<RecipeCookingAppliance> RecipeCookingAppliances { get; set; }
         }
@@ -345,7 +345,7 @@ namespace recipesCommon.DataAccess
         public class Utensil
         {
             public int UtensilId { get; set; }
-            public string Name { get; set; } // np. "Łyżka"
+            public string Name { get; set; }
 
             public DateTime CreatedOn { get; set; }
             public DateTime LastModifiedOn { get; set; }
@@ -413,7 +413,8 @@ namespace recipesCommon.DataAccess
         public class IngredientAmountType
         {
             public int IngredientAmountTypeId { get; set; }
-            public string UnitName { get; set; } // Nazwa jednostki miary, np. "gram", "ml"
+            public string UnitName { get; set; }
+            public DateTime CreatedOn { get; set; }
             public virtual ICollection<Ingredient> Ingredients { get; set; }
         }
 

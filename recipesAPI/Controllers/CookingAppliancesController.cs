@@ -34,7 +34,7 @@ namespace recipesAPI.Controllers
             {
                 Name = request.Name,
                 CreatedOn = DateTime.UtcNow,
-                LastModifiedOn = DateTime.UtcNow
+               
             };
 
             await _cookingApplianceService.AddAsync(cookingAppliance);
@@ -44,7 +44,7 @@ namespace recipesAPI.Controllers
                 CookingApplianceId = cookingAppliance.CookingApplianceId,
                 Name = cookingAppliance.Name,
                 CreatedOn = cookingAppliance.CreatedOn,
-                LastModifiedOn = cookingAppliance.LastModifiedOn
+              
             };
 
             return Ok(response);

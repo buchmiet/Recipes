@@ -3,9 +3,11 @@ using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using recipesAPI.DataAccess;
 using recipesCommon.DataAccess;
 using recipesCommon.Interfaces;
 using recipesCommon.Model.Request;
+using System;
 
 
 
@@ -15,37 +17,54 @@ namespace recipesAPI
     {
         public static string connectionString = "";
 
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
-            // Dodawanie usług przed utworzeniem aplikacji
-            builder.Services.AddControllers();
-             
+          
+            builder.Services.AddControllers();             
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            // Konfiguracja połączenia z bazą danych
-            var connectionString = GetConnectionString(builder);
-            builder.Services.AddDbContext<RecipesDbContext>(options =>
-                options.UseMySql(connectionString, new MySqlServerVersion(new Version(11, 3))));
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            if (environment == "Test")
+            {
+            
+                builder.Services.AddDbContext<RecipesDbContext>(options =>
+                    options.UseInMemoryDatabase("TestDatabase"));
+          
 
-            // Dodawanie dodatkowych zależności
+             
+            }
+            else
+            {
+            
+                var connectionString = GetConnectionString(builder);
+                builder.Services.AddDbContext<RecipesDbContext>(options =>
+                    options.UseMySql(connectionString, new MySqlServerVersion(new Version(11, 3))));
+               
+            }
+
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
             builder.Services.AddScoped(typeof(IEntityService<>), typeof(EntityService<>));
 
             builder.Services.AddValidatorsFromAssemblyContaining<CreateAuthorRequestValidator>();
 
-            // Budowanie aplikacji
-            var app = builder.Build();
 
-            // Konfiguracja middleware
-            app.UseHttpsRedirection();
+            var app = builder.Build();
+            if (environment == "Test")
+            {
+                using (var scope = app.Services.CreateScope())
+                {
+                    var services = scope.ServiceProvider;
+                    await TestDataGenerator.Initialize(services);
+                }
+            }
+
+                app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
 
-            // Swagger UI dostępny tylko w środowisku developerskim
             if (!app.Environment.IsProduction())
             {
                 app.UseSwagger();

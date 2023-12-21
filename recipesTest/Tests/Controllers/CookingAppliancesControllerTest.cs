@@ -41,8 +41,7 @@ namespace recipesTest.Tests.Controllers
             var cookingAppliance = new CookingAppliance
             {
                 Name = request.Name,
-                CreatedOn = DateTime.UtcNow,
-                LastModifiedOn = DateTime.UtcNow
+                CreatedOn = DateTime.UtcNow,             
             };
             _mockCookingApplianceService.Setup(s => s.AddAsync(It.IsAny<CookingAppliance>(), It.IsAny<bool>()))
                                         .Returns(Task.CompletedTask)
