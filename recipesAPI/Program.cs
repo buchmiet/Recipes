@@ -27,27 +27,27 @@ namespace recipesAPI
            .ReadFrom.Configuration(builder.Configuration)
            .CreateLogger();
 
-            builder.Services.AddControllers();             
+            builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             if (environment == "Test")
             {
-            
+
                 builder.Services.AddDbContext<RecipesDbContext>(options =>
                     options.UseInMemoryDatabase("TestDatabase"));
-          
 
-             
+
+
             }
             else
             {
-            
+
                 var connectionString = GetConnectionString(builder);
                 builder.Services.AddDbContext<RecipesDbContext>(options =>
                     options.UseMySql(connectionString, new MySqlServerVersion(new Version(11, 3))));
-               
+
             }
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -69,7 +69,7 @@ namespace recipesAPI
                 }
             }
 
-                app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
 
@@ -104,4 +104,5 @@ namespace recipesAPI
 
     }
 
-   
+
+}

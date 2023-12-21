@@ -4,15 +4,15 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using recipesAPI.Controllers;
 using recipesCommon.Interfaces;
-using recipesCommon.Model.Request;
-using recipesCommon.Model.Response;
+using recipesApi.Model.Request;
+using recipesApi.Model.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using static recipesCommon.DataAccess.RecipesDbContext;
+using static recipesApi.DataAccess.RecipesDbContext;
 
 namespace recipesTest.Tests.Controllers
 {

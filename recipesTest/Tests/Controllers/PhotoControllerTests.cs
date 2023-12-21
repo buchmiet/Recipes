@@ -3,15 +3,15 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using recipesAPI.Controllers;
-using recipesCommon.Model.Request;
-using recipesCommon.Model.Response;
+using recipesApi.Model.Request;
+using recipesApi.Model.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using recipesCommon.Interfaces;
-using static recipesCommon.DataAccess.RecipesDbContext;
+using static recipesApi.DataAccess.RecipesDbContext;
 using Microsoft.AspNetCore.Http.HttpResults;
 using System.Linq.Expressions;
 

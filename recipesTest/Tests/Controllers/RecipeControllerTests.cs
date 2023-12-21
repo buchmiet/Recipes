@@ -3,14 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using recipesAPI.Controllers;
 using recipesCommon.Interfaces;
-using recipesCommon.Model.Request;
-using recipesCommon.Model.Response;
+using recipesApi.Model.Request;
+using recipesApi.Model.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static recipesCommon.DataAccess.RecipesDbContext;
+using static recipesApi.DataAccess.RecipesDbContext;
+using recipesAPI.Services;
 
 namespace recipesTest.Tests.Controllers
 {
@@ -20,6 +21,7 @@ namespace recipesTest.Tests.Controllers
         private RecipeController _controller;
         private Mock<IEntityService<Recipe>> _mockRecipeService;
         private Mock<IEntityService<Author>> _mockAuthorService;
+        private Mock<ISearchService> _mockSearchService;
         private IValidator<CreateRecipeRequest> _validator;
         int _validAuthorId = 123;
 
@@ -28,11 +30,12 @@ namespace recipesTest.Tests.Controllers
         {
             _mockRecipeService = new Mock<IEntityService<Recipe>>();
             _mockAuthorService = new Mock<IEntityService<Author>>();
+            _mockSearchService=new Mock<ISearchService>();
             var author = new Author { AuthorId = _validAuthorId };
             _mockAuthorService.Setup(s => s.GetByIdAsync(_validAuthorId))
                              .ReturnsAsync(author);
             _validator = new CreateRecipeRequestValidator(_mockAuthorService.Object);
-            _controller = new RecipeController(_mockRecipeService.Object, _validator);
+            _controller = new RecipeController(_mockSearchService.Object,  _mockRecipeService.Object, _validator);
         }
 
         [Test]
