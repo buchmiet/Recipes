@@ -1,12 +1,22 @@
 Recipes API
 
+Case study :
+
+One of our clients is requesting a new, modern website to replace their existing, aging website.
+The current website provides users with a way to search for recipes based on a list of criteria
+such as available ingredients, length of time to cook and recipe name searching.
+UI designs have been provided and you will be working with another developer who will be
+focusing on the front end. You have been tasked with designing and implementing a REST API
+in .NET.
+
+
 1. In the given case when we do have a customer who has running service and the warehouse of data, we should be able to strucre the data and create relationaldatabase. Considering that recipes are niche and there won't be most likely a need to dramatically increase the size of the database, SQL seems to be the best choice in the given secnario.
  
  I have prepared simple database that could be used for the given purpose :
 
 ![UML](https://i.ibb.co/hCxwgCy/Recipes.png)
 
-2. Firstly, I would create DTO requesr classes for each request that updates data. I would use fluent validation to verify if the data can be safely converted to teh database objects. Example
+2. Firstly, I would create DTO request classes for each request that updates data. I would use fluent validation to verify if the data can be safely converted to teh database objects. Example
 
 ```csharp
   [HttpPost]
